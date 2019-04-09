@@ -5,11 +5,6 @@ import Spinner from '../spinner'
 import ErrorIndicator from '../error-indicator';
 
 export default class RandomPlanet extends Component {
-  constructor() {
-    super()
-    this.updatePlanet()
-  }
-
   swapiService = new SWapiService()
 
   state = {
@@ -18,8 +13,17 @@ export default class RandomPlanet extends Component {
     error: false,
   }
 
+  componentDidMount() {
+    this.updatePlanet()
+    this.interval = setInterval(this.updatePlanet, 5000)
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval)
+  }
+
   onPlanetLoaded = (planet) => {
-    this.setState({ 
+    this.setState({
       planet,
       loading: false,
     })
