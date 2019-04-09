@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './item-list.css';
 import Spinner from '../spinner';
-
 import SWapiService from '../../services/swapi-services'
 
 export default class ItemList extends Component {
