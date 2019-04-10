@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
+import './App.css';
 
 import Header from './header';
 import RandomPlanet from './random-planet';
-import ItemList from './item-list';
-import PersonDetails from './person-details';
-
-import './App.css';
+import PeoplePage from './people-page';
+import ErrorButton from './error-button';
+import ErrorIndicator from './error-indicator';
 
 export default class App extends Component {
   state = {
     showRandomPlanet: true,
-    selectedPerson: null
+    // selectedPerson: null,
+    hasError: false
   }
 
   toggleRandomPlanet = () => {
@@ -21,36 +22,33 @@ export default class App extends Component {
     })
   }
 
-  onPersonSelecterd = (id) => {
+  componentDidCatch() {
     this.setState({
-      selectedPerson: id
+      hasError: true
     })
   }
 
   render() {
+    if(this.state.hasError) {
+      return <ErrorIndicator />
+    } else {
+      return (
+        <div className='container'>
+          <Header />
+          { this.state.showRandomPlanet ? <RandomPlanet /> : null }
 
-    return (
-      <div className='container'>
-        <Header />
-        { this.state.showRandomPlanet ? <RandomPlanet /> : null }
-
-        <div className="row mb2 button-row">
-          <button
-            className="toggle-planet btn btn-warning btn-lg"
-            onClick={this.toggleRandomPlanet}>
-            Toggle Random Planet
-          </button>
-        </div>
-
-        <div className='row mb2'>
-          <div className='col-md-6'>
-            <ItemList onItemSelected={ this.onPersonSelecterd } />
+          <div className="row mb2 button-row">
+            <button
+              className="toggle-planet btn btn-warning btn-lg"
+              onClick={this.toggleRandomPlanet}>
+              Toggle Random Planet
+            </button>
+            <ErrorButton />
           </div>
-          <div className='col-md-6'>
-            <PersonDetails personId={ this.state.selectedPerson } />
-          </div>
+
+          <PeoplePage />
         </div>
-      </div>
-    )
+      )
+    }
   }
 }

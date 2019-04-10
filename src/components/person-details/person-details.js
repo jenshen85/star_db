@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import './person-details.css';
 import Spinner from '../spinner';
 import SWapiService from '../../services/swapi-services';
+import ErrorButton from '../error-button';
 
 export default class PersonDetails extends Component {
   swapiService = new SWapiService()
@@ -76,6 +77,7 @@ const PersonView = ({ person }) => {
             <span>{ eyeColor }</span>
           </li>
         </ul>
+        <ErrorButton />
       </div>
     </Fragment>
   )
