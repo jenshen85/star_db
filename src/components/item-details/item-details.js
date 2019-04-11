@@ -1,8 +1,22 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component, Fragment, Children } from 'react';
 import './item-details.css';
 import Spinner from '../spinner';
 import SWapiService from '../../services/swapi-services';
 import ErrorButton from '../error-button';
+
+const Record = ({ item, field, label}) => {
+  console.log(item);
+  return (
+    <li className="list-group-item">
+      <span className="term">{ label }</span>
+      <span>{ item[field] }</span>
+    </li>
+  )
+}
+
+export {
+  Record
+}
 
 export default class ItemDetails extends Component {
   swapiService = new SWapiService()
@@ -10,6 +24,7 @@ export default class ItemDetails extends Component {
   state = {
     item: null,
     itemLoad: true,
+    image: null,
   }
 
   componentDidMount() {
@@ -24,14 +39,14 @@ export default class ItemDetails extends Component {
 
   updateItem() {
     this.setState({itemLoad: false})
-    const { itemId } = this.props
+    const { itemId, getData, getImgUrl } = this.props
     if(itemId) {
-      this.swapiService
-        .getPeople(itemId)
+      getData(itemId)
         .then((item) => {
           this.setState({
             item,
-            itemLoad: true
+            itemLoad: true,
+            image: getImgUrl(item)
           })
         })
     } else {
@@ -44,8 +59,16 @@ export default class ItemDetails extends Component {
   render() {
     const spinner = <Spinner />
     const item = this.state.item
-                        ? <ItemView item={ this.state.item } />
-                        : <ItemNot />
+      ? <ItemView image={ this.state.image } 
+                  item={ this.state.item } >
+          {
+            Children.map(
+              this.props.children, 
+              (child) => React.cloneElement(child, { item:this.state.item })
+            )
+          }
+        </ItemView>
+      : <ItemNot />
     return (
       <div className="item-details card">
         {this.state.itemLoad ? item : spinner}
@@ -54,28 +77,17 @@ export default class ItemDetails extends Component {
   }
 }
 
-const ItemView = ({ item }) => {
-  const {id, name, gender, birthYear, eyeColor} = item
+const ItemView = ({ item, image, children }) => {
+  const { name } = item
   return (
     <Fragment>
       <img  className="item-details-image" alt=''
-          src={`https://starwars-visualguide.com/assets/img/characters/${id}.jpg`} />
+          src={image} />
 
       <div className="card-body">
         <h4>{ name }</h4>
         <ul className="list-group list-group-flush">
-          <li className="list-group-item">
-            <span className="term">Gender</span>
-            <span>{ gender }</span>
-          </li>
-          <li className="list-group-item">
-            <span className="term">Birth Year</span>
-            <span>{ birthYear }</span>
-          </li>
-          <li className="list-group-item">
-            <span className="term">Eye Color</span>
-            <span>{ eyeColor }</span>
-          </li>
+          { children }
         </ul>
         <ErrorButton />
       </div>
