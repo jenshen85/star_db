@@ -1,64 +1,64 @@
 import React, { Component, Fragment } from 'react';
-import './person-details.css';
+import './item-details.css';
 import Spinner from '../spinner';
 import SWapiService from '../../services/swapi-services';
 import ErrorButton from '../error-button';
 
-export default class PersonDetails extends Component {
+export default class ItemDetails extends Component {
   swapiService = new SWapiService()
 
   state = {
-    person: null,
-    personLoad: true
+    item: null,
+    itemLoad: true,
   }
 
   componentDidMount() {
-    this.updatePerson()
+    this.updateItem()
   }
 
   componentDidUpdate(prevProps) {
-    if(this.props.personId !== prevProps.personId) {
-      this.updatePerson()
+    if(this.props.itemId !== prevProps.itemId) {
+      this.updateItem()
     }
   }
 
-  updatePerson() {
-    this.setState({personLoad: false})
-    const { personId } = this.props
-    if(personId) {
+  updateItem() {
+    this.setState({itemLoad: false})
+    const { itemId } = this.props
+    if(itemId) {
       this.swapiService
-        .getPeople(personId)
-        .then((person) => {
+        .getPeople(itemId)
+        .then((item) => {
           this.setState({
-            person,
-            personLoad: true
+            item,
+            itemLoad: true
           })
         })
     } else {
       this.setState({
-        personLoad: true
+        itemLoad: true
       })
     }
   }
 
   render() {
     const spinner = <Spinner />
-    const person = this.state.person
-                        ? <PersonView person={ this.state.person } />
-                        : <PersonNot />
+    const item = this.state.item
+                        ? <ItemView item={ this.state.item } />
+                        : <ItemNot />
     return (
-      <div className="person-details card">
-        {this.state.personLoad ? person : spinner}
+      <div className="item-details card">
+        {this.state.itemLoad ? item : spinner}
       </div>
     )
   }
 }
 
-const PersonView = ({ person }) => {
-  const {id, name, gender, birthYear, eyeColor} = person
+const ItemView = ({ item }) => {
+  const {id, name, gender, birthYear, eyeColor} = item
   return (
     <Fragment>
-      <img  className="person-image" alt=''
+      <img  className="item-details-image" alt=''
           src={`https://starwars-visualguide.com/assets/img/characters/${id}.jpg`} />
 
       <div className="card-body">
@@ -83,6 +83,6 @@ const PersonView = ({ person }) => {
   )
 }
 
-const PersonNot = () => {
-  return <span>Select a person  from a list</span>
+const ItemNot = () => {
+  return <span>Select item from a list</span>
 }
