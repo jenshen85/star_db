@@ -6,11 +6,13 @@ import RandomPlanet from './random-planet';
 import PeoplePage from './people-page';
 import ErrorButton from './error-button';
 import ErrorIndicator from './error-indicator';
+import SWapiService from '../services/swapi-services';
 
 export default class App extends Component {
+  swapiService = new SWapiService()
+
   state = {
     showRandomPlanet: true,
-    // selectedPerson: null,
     hasError: false
   }
 
