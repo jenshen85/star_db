@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-const withDetailsData = (View, getData) => class DetailsWrapp extends Component {
+const withDetailsData = (View) => class DetailsWrapp extends Component {
   state = {
     data: null,
     dataLoad: true,
@@ -21,7 +21,7 @@ const withDetailsData = (View, getData) => class DetailsWrapp extends Component 
     this.setState({dataLoad: false})
     const { itemId, getImgUrl } = this.props
     if(itemId) {
-      getData(itemId)
+      this.props.getData(itemId)
         .then((data) => {
           this.setState({
             data,

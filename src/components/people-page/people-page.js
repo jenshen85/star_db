@@ -1,16 +1,13 @@
 import React, { Component } from 'react'
 import './people-page.css';
 
+import { SwapiServiceConsumer } from '../swapi-service-context/';
 import { PersonList, PersonDetails } from '../sw-components/';
 import { Record } from '../item-details';
 import ErrorBoundry from '../error-boundry/';
 import Row from '../row';
 
-import SWapiService from '../../services/swapi-services';
-
 export default class PeoplePage extends Component {
-  swapiService = new SWapiService();
-
   state={
     selectedPerson: null,
   }
@@ -22,20 +19,38 @@ export default class PeoplePage extends Component {
   }
 
   render() {
-    const personList = <PersonList  
-            onItemSelected={ this.onPersonSelecterd }
-          >
-            {(i) => `${i.name} (${i.birthYear})`}
-          </PersonList>
-    const { getPeopleImg } = this.swapiService
-    const personDetails = <PersonDetails 
-            itemId={ this.state.selectedPerson }
-            getImgUrl={getPeopleImg} 
-          >
-            <Record field='gender' label='Gender'/>
-            <Record field='birthYear' label='Birth Year'/>
-            <Record field='eyeColor' label='Eye Color'/>
-          </PersonDetails>
+    const personList = 
+      <SwapiServiceConsumer>
+        {
+          ({ getAllPeople }) => {
+            return (
+              <PersonList getData={ getAllPeople } onItemSelected={ this.onPersonSelecterd } >
+                {(i) => `${i.name} (${i.birthYear})`}
+              </PersonList>
+            )
+          }
+        }
+      </SwapiServiceConsumer>
+  
+    const personDetails = 
+      <SwapiServiceConsumer>
+        {
+          ({getPeople, getPeopleImg}) => {
+            return (
+              <PersonDetails 
+                itemId={ this.state.selectedPerson }
+                getImgUrl={getPeopleImg}
+                getData={getPeople}
+              >
+                <Record field='gender' label='Gender'/>
+                <Record field='birthYear' label='Birth Year'/>
+                <Record field='eyeColor' label='Eye Color'/>
+              </PersonDetails>
+            )
+          }
+        }
+      </SwapiServiceConsumer>
+
     return (
       <ErrorBoundry>
         <Row left={ personList } right={ personDetails }/>

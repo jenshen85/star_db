@@ -4,50 +4,28 @@ import './App.css';
 import Header from './header';
 import RandomPlanet from './random-planet';
 import PeoplePage from './people-page';
-import ErrorButton from './error-button';
-import ErrorIndicator from './error-indicator';
+import ErrorBoundry from './error-boundry/';
+import { SwapiServiceProvider } from './swapi-service-context/'
+
+import SWapiService from '../services/swapi-services';
 
 export default class App extends Component {
-  state = {
-    showRandomPlanet: true,
-    hasError: false
-  }
-
-  toggleRandomPlanet = () => {
-    this.setState((state) => {
-      return {
-        showRandomPlanet: !state.showRandomPlanet
-      }
-    })
-  }
-
-  componentDidCatch() {
-    this.setState({
-      hasError: true
-    })
-  }
+  swapiService = new SWapiService();
 
   render() {
-    if(this.state.hasError) {
-      return <ErrorIndicator />
-    } else {
-      return (
-        <div className='container'>
-          <Header />
-          { this.state.showRandomPlanet ? <RandomPlanet /> : null }
+    return (
+      <ErrorBoundry>
+        {/*use context api */}
+        <SwapiServiceProvider value={this.swapiService}> 
+          <div className='container'>
+            <Header />
+            <RandomPlanet />
 
-          <div className="row mb2 button-row">
-            <button
-              className="toggle-planet btn btn-warning btn-lg"
-              onClick={this.toggleRandomPlanet}>
-              Toggle Random Planet
-            </button>
-            <ErrorButton />
-          </div>
+            <PeoplePage />
+          </div>             
+        </SwapiServiceProvider>
+      </ErrorBoundry>
 
-          <PeoplePage />
-        </div>
-      )
-    }
+    )
   }
 }

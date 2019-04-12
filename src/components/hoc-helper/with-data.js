@@ -6,7 +6,8 @@ const withData = (View, getData) => class ItemListWrap extends Component {
   }
 
   componentDidMount() {
-    getData()
+    this.props
+      .getData()
       .then((data) => {
         this.setState({data})
       })
@@ -14,11 +15,7 @@ const withData = (View, getData) => class ItemListWrap extends Component {
 
   render() {
     const {data} = this.state
-    return (
-      <React.Fragment>
-        { <View { ...this.props } data={ data } /> }
-      </React.Fragment>
-    )
+    return <View { ...this.props } data={ data } />
   } 
 }
 
