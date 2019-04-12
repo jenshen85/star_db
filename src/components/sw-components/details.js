@@ -1,30 +1,72 @@
-import ItemDetails from '../item-details/';
-import { withDetailsData/*, withApiService, withChildFunc, compose*/ } from '../hoc-helper';
+import React from 'react'
+import ItemDetails, { Record } from '../item-details/';
+import { withDetailsData, withApiService, compose } from '../hoc-helper';
 
-// const renderPersonDetails = ({name, birthYear}) => <span>{name} ({birthYear})</span>
-// const renderPlanetDetails = ({name, diameter}) => <span>{name} ({diameter})</span>
-// const renderStarshipDetails = ({name, model}) => <span>{name} ({model})</span>
+const renderPersonDetails = (props) => {
+  return (
+    <ItemDetails {...props}>
+      <Record field='gender' label='Gender'/>
+      <Record field='birthYear' label='Birth Year'/>
+      <Record field='eyeColor' label='Eye Color'/>
+    </ItemDetails>
+  )
+}
 
-// const mapPersonDetailsMethodToProps = (apiService) => {
-//   return {
-//     getData: apiService.getPeople
-//   }
-// }
+const mapPersonDetailsMethodToProps = (apiService) => {
+  return {
+    getData: apiService.getPeople,
+    getImgUrl: apiService.getPeopleImage,
+  }
+}
 
-// const mapPlanetDetailsMethodToProps = (apiService) => {
-//   return {
-//     getData: apiService.getPlanets
-//   }
-// }
+const PersonDetails = compose(
+  withApiService(mapPersonDetailsMethodToProps),
+  withDetailsData,
+)(renderPersonDetails);
 
-// const mapStarshipDetailsMethodToProps = (apiService) => {
-//   return {
-//     getData: apiService.getStarships
-//   }
-// }
-const PersonDetails = withDetailsData(ItemDetails);
-const PlanetDetails = withDetailsData(ItemDetails);
-const StarshipDetails = withDetailsData(ItemDetails);
+const mapPlanetDetailsMethodToProps = (apiService) => {
+  return {
+    getData: apiService.getPlanet,
+    getImgUrl: apiService.getPlanetImage,
+  }
+}
+
+const renderPlanetDetails = (props) => {
+  return (
+    <ItemDetails {...props}>
+      <Record field='population' label='Population'/>
+      <Record field='rotationPeriod' label='Rotation period'/>
+      <Record field='diameter' label='diameter'/>
+    </ItemDetails>
+  )
+}
+
+const PlanetDetails = compose(
+  withApiService(mapPlanetDetailsMethodToProps),
+  withDetailsData,
+)(renderPlanetDetails);
+
+const mapStarshipDetailsMethodToProps = (apiService) => {
+  return {
+    getData: apiService.getStarship,
+    getImgUrl: apiService.getStarshipImage,
+  }
+}
+
+const renderStarshipDetails = (props) => {
+  return (
+    <ItemDetails {...props}>
+      <Record field='model' label='Model'/>
+      <Record field='length' label='Length'/>
+      <Record field='costInCredits' label='Cost'/>
+    </ItemDetails>
+  )
+}
+
+const StarshipDetails = compose(
+  withApiService(mapStarshipDetailsMethodToProps),
+  withDetailsData,
+)(renderStarshipDetails);
 
 export {
   PersonDetails,

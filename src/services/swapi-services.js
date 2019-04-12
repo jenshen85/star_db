@@ -83,11 +83,11 @@ export default class SWapiService {
       name: starship.name,
       model: starship.model,
       manufacturer: starship.manufacturer,
-      costInCredits: starship.costInCredits,
+      costInCredits: starship.cost_in_credits,
       length: starship.length,
       crew: starship.crew,
       passenger: starship.passenger,
-      cargoCapasity: starship.cargoCapasity,
+      cargoCapasity: starship.cargo_capacity,
     }
   }
 }

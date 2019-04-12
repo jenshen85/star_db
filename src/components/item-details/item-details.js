@@ -4,6 +4,7 @@ import Spinner from '../spinner';
 import ErrorButton from '../error-button';
 
 const ItemDetails = ({data, dataLoad, dataImage, children}) => {
+  console.log(children);
   const spinner = <Spinner />
   const items = data
     ? <ItemView image={ dataImage } item={ data }>
