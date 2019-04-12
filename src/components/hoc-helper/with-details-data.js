@@ -19,9 +19,9 @@ const withDetailsData = (View) => class DetailsWrapp extends Component {
 
   updateItem() {
     this.setState({dataLoad: false})
-    const { itemId, getImgUrl } = this.props
+    const { itemId, getImgUrl, getData } = this.props
     if(itemId) {
-      this.props.getData(itemId)
+      getData(itemId)
         .then((data) => {
           this.setState({
             data,

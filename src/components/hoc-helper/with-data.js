@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-const withData = (View, getData) => class ItemListWrap extends Component {
+const withData = (View) => class ItemListWrap extends Component {
   state = {
     data: null
   }

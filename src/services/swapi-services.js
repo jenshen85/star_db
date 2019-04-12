@@ -20,7 +20,7 @@ export default class SWapiService {
     return this._transformPerson(person);
   }
 
-  getPeopleImg = ({id}) => {
+  getPeopleImage = ({id}) => {
     return `${this._imageBase}/characters/${id}.jpg`
   }
 

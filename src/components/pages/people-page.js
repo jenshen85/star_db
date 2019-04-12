@@ -1,45 +1,34 @@
 import React, { Component } from 'react'
 import './people-page.css';
 
-import { SwapiServiceConsumer } from '../swapi-service-context/';
-import { PersonList, PersonDetails } from '../sw-components/';
+import { SwapiServiceConsumer } from '../swapi-service-context';
+import { PersonList, PersonDetails } from '../sw-components';
 import { Record } from '../item-details';
-import ErrorBoundry from '../error-boundry/';
+import ErrorBoundry from '../error-boundry';
 import Row from '../row';
 
 export default class PeoplePage extends Component {
-  state={
+  state = {
     selectedPerson: null,
   }
 
-  onPersonSelecterd = (id) => {
+  onPersonSelected = (id) => {
     this.setState({
       selectedPerson: id
     })
   }
 
   render() {
-    const personList = 
-      <SwapiServiceConsumer>
-        {
-          ({ getAllPeople }) => {
-            return (
-              <PersonList getData={ getAllPeople } onItemSelected={ this.onPersonSelecterd } >
-                {(i) => `${i.name} (${i.birthYear})`}
-              </PersonList>
-            )
-          }
-        }
-      </SwapiServiceConsumer>
+    const personList = <PersonList onItemSelected={ this.onPersonSelected } />
   
     const personDetails = 
       <SwapiServiceConsumer>
         {
-          ({getPeople, getPeopleImg}) => {
+          ({getPeople, getPeopleImage}) => {
             return (
               <PersonDetails 
                 itemId={ this.state.selectedPerson }
-                getImgUrl={getPeopleImg}
+                getImgUrl={getPeopleImage}
                 getData={getPeople}
               >
                 <Record field='gender' label='Gender'/>
