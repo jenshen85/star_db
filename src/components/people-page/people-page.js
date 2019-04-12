@@ -27,9 +27,9 @@ export default class PeoplePage extends Component {
           >
             {(i) => `${i.name} (${i.birthYear})`}
           </ItemList>
-    const { getPeople, getPeopleImg } = this.swapiService
+    const { getPeopleImg } = this.swapiService
     const personDetails = <ItemDetails 
-            getData={ getPeople } 
+            // getData={ getPeople } 
             itemId={ this.state.selectedPerson }
             getImgUrl={getPeopleImg} 
           >
