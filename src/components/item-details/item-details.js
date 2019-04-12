@@ -4,20 +4,6 @@ import Spinner from '../spinner';
 import SWapiService from '../../services/swapi-services';
 import ErrorButton from '../error-button';
 
-const Record = ({ item, field, label}) => {
-  console.log(item);
-  return (
-    <li className="list-group-item">
-      <span className="term">{ label }</span>
-      <span>{ item[field] }</span>
-    </li>
-  )
-}
-
-export {
-  Record
-}
-
 export default class ItemDetails extends Component {
   swapiService = new SWapiService()
 
@@ -63,7 +49,8 @@ export default class ItemDetails extends Component {
                   item={ this.state.item } >
           {
             Children.map(
-              this.props.children, 
+              this.props.children,
+              // clone element with new options
               (child) => React.cloneElement(child, { item:this.state.item })
             )
           }
@@ -97,4 +84,17 @@ const ItemView = ({ item, image, children }) => {
 
 const ItemNot = () => {
   return <span>Select item from a list</span>
+}
+
+const Record = ({ item, field, label}) => {
+  return (
+    <li className="list-group-item">
+      <span className="term">{ label }</span>
+      <span>{ item[field] }</span>
+    </li>
+  )
+}
+
+export {
+  Record
 }
