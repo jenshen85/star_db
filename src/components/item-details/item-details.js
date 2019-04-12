@@ -1,18 +1,11 @@
 import React, { Fragment, Children } from 'react';
 import './item-details.css';
 import Spinner from '../spinner';
-import SWapiService from '../../services/swapi-services';
 import ErrorButton from '../error-button';
-import { withDetailsData } from '../hoc-helper/';
-
-const swapiService = new SWapiService();
-const {
-  getPeople
-} = swapiService
 
 const ItemDetails = ({data, dataLoad, dataImage, children}) => {
   const spinner = <Spinner />
-  const item = data
+  const items = data
     ? <ItemView image={ dataImage } item={ data }>
         {
           Children.map(
@@ -24,12 +17,12 @@ const ItemDetails = ({data, dataLoad, dataImage, children}) => {
     : <ItemNot />
   return (
     <div className="item-details card">
-      {dataLoad ? item : spinner}
+      {dataLoad ? items : spinner}
     </div>
   )
 }
 
-export default withDetailsData(ItemDetails, getPeople)
+export default ItemDetails
 
 const ItemView = ({ item, image, children }) => {
   const { name } = item
