@@ -1,5 +1,6 @@
 import React from 'react';
 import './item-list.css';
+import Spinner from '../spinner';
 import { withData } from '../hoc-helper/';
 
 import SWapiService from '../../services/swapi-services';
@@ -8,8 +9,9 @@ const swapiService = new SWapiService()
 const { getAllPeople } = swapiService
 
 const ItemList = (props) => {
+  const spinner = <Spinner />
   const { data, onItemSelected, children } = props
-  const items = data.map((item) => {
+  const content = data ? data.map((item) => {
     const label = children(item)
     return (
       <li className="list-group-item"
@@ -18,10 +20,10 @@ const ItemList = (props) => {
         { label }
       </li>
     )
-  })
+  }) : spinner
   return (
     <ul className="item-list list-group">
-      { items }
+      { content }
     </ul>
   )
 }

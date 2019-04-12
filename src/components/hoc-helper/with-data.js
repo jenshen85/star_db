@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Spinner from '../spinner';
 
 const withData = (View, getData) => class ItemListWrap extends Component {
   state = {
@@ -17,7 +16,7 @@ const withData = (View, getData) => class ItemListWrap extends Component {
     const {data} = this.state
     return (
       <React.Fragment>
-        { data ? <View { ...this.props } data={ data } /> : <Spinner /> }
+        { <View { ...this.props } data={ data } /> }
       </React.Fragment>
     )
   } 
