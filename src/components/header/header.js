@@ -1,29 +1,30 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './header.css';
 
 export default function Header() {
   return (
     <div className='header d-flex'>
       <h3>
-        <a href='/'>
+        <Link to='/'>
           Star DB
-        </a>
+        </Link>
       </h3>
       <ul className='d-flex'>
         <li>
-          <a href='/'>
+          <Link to='/people/'>
             People
-          </a>
+          </Link>
         </li>
         <li>
-          <a href='/'>
+          <Link to='/planets/'>
             Planets
-          </a>
+          </Link>
         </li>
         <li>
-          <a href='/'>
+          <Link to='/starships/'>
             Starships
-          </a>
+          </Link>
         </li>
       </ul>
     </div>
