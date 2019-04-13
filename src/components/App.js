@@ -25,7 +25,7 @@ export default class App extends Component {
               <RandomPlanet />
 
               <Route path='/' render={() => <h2>Welcome to StarDB</h2>} exact />
-              <Route path='/people' component={PeoplePage} />
+              <Route path='/people/:id?' component={PeoplePage} />
               <Route path='/planets' component={PlanetPage} />
               <Route path='/starships' component={StarshipPage} exact />
               <Route path='/starships/:id' render={({match}) => {

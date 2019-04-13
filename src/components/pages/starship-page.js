@@ -8,9 +8,7 @@ import ErrorBoundry from '../error-boundry';
 const StarshipPage = ({ history }) => {
   return (
     <ErrorBoundry>
-      <StarshipList onItemSelected={(itemId) => {
-        history.push(`/starships/${itemId}`)
-      }} />
+      <StarshipList onItemSelected={(id) => history.push(id)} />
     </ErrorBoundry>
   )
 }
