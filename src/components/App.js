@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route  } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
 
 import Header from './header';
@@ -23,15 +23,18 @@ export default class App extends Component {
             <div className='container'>
               <Header />
               <RandomPlanet />
-
-              <Route path='/' render={() => <h2>Welcome to StarDB</h2>} exact />
-              <Route path='/people/:id?' component={PeoplePage} />
-              <Route path='/planets' component={PlanetPage} />
-              <Route path='/starships' component={StarshipPage} exact />
-              <Route path='/starships/:id' render={({match}) => {
-                const { id } = match.params
-                return <StarshipDetails itemId={id} />
-              }} />
+              <Switch>
+                <Route path='/' render={() => <h2>Welcome to StarDB</h2>} exact />
+                <Route path='/people/:id?' component={PeoplePage} />
+                <Route path='/planets' component={PlanetPage} />
+                <Route path='/starships' component={StarshipPage} exact />
+                <Route path='/starships/:id' render={({match}) => {
+                  const { id } = match.params
+                  return <StarshipDetails itemId={id} />
+                }} />
+                {/* rout which not has attribute path, be always activate. */}
+                <Route render={() => <h2>404!!! Page not found!!!</h2>} />
+              </Switch>
             </div>
           </Router>
         </SwapiServiceProvider>

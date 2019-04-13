@@ -1,7 +1,7 @@
 import React, { Fragment, Children } from 'react';
 import './item-details.css';
 import Spinner from '../spinner';
-import ErrorButton from '../error-button';
+import ErrorBoundry from '../error-boundry';
 
 const ItemDetails = ({data, dataLoad, dataImage, children}) => {
   const spinner = <Spinner />
@@ -16,9 +16,11 @@ const ItemDetails = ({data, dataLoad, dataImage, children}) => {
       </ItemView>
     : <ItemNot />
   return (
-    <div className="item-details card">
-      {dataLoad ? items : spinner}
-    </div>
+    <ErrorBoundry>
+      <div className="item-details card">
+        {dataLoad ? items : spinner}
+      </div>
+    </ErrorBoundry>
   )
 }
 
@@ -36,7 +38,6 @@ const ItemView = ({ item, image, children }) => {
         <ul className="list-group list-group-flush">
           { children }
         </ul>
-        <ErrorButton />
       </div>
     </Fragment>
   )
